@@ -3,7 +3,7 @@ import {
   registerUser,
   loginUser,
  
-} from "../controllers/userregister";
+} from "../controllers/userRegister";
 
 
 
