@@ -31,9 +31,7 @@ const registerUser = async (req: Request, res: Response): Promise<Response> => {
       return res.status(400).json("Email must be a valid email");
     }
 
-    if (!validator.isStrongPassword(password)) {
-      return res.status(400).json("Password must be a strong password");
-    }
+  
 
     user = new UserModel({
       email,
