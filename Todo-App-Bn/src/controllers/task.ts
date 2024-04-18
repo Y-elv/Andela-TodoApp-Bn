@@ -3,7 +3,15 @@ import TaskModel, { Task } from "../models/taskModel";
 
 const createTask = async (req: Request, res: Response): Promise<void> => {
   try {
-    const data: Task = req.body;
+    const data = req.body;
+    
+    if (!data.title || !data.description) {
+       res.status(400).json({
+         message: "Title , completed and description are required",
+        
+       });
+        return; 
+    }
 
     let taskInstance = new TaskModel({
       title: data.title,
@@ -12,24 +20,23 @@ const createTask = async (req: Request, res: Response): Promise<void> => {
     });
 
     const savedData = await taskInstance.save();
-    res.status(200).json({
-      message: "Data saved successfully",
-      error: null,
-      data: savedData,
-    });
+ res.status(200).json({
+     message: "Data saved successfully",
+     data: savedData,
+   });
   } catch (error) {
-    res.status(500).json({
-      message: "Failed to save the data",
-      error: "Failed",
-    });
+ res.status(500).json({
+     message: "Failed to save the data",
+     error: "Failed",
+   });
   }
 };
 
 const readAllTask = async (req: Request, res: Response): Promise<void> => {
   try {
     const result = await TaskModel.find({}).sort({
-        createdAt: -1,
-      });
+      createdAt: -1,
+    });
     if (result.length === 0) {
       res.status(400).json({
         message: "There is no data saved yet",
@@ -89,8 +96,8 @@ const updateTaskById = async (req: Request, res: Response): Promise<void> => {
       });
     } else {
       const result = await TaskModel.findOneAndUpdate(
-        {_id:id},
-        {$set:bodyEntered}
+        { _id: id },
+        { $set: bodyEntered }
       );
       res.status(200).json({
         message: `Data with ID ${id} updated successfully`,
