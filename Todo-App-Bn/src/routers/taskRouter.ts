@@ -1,26 +1,20 @@
 import express from "express";
 import {
-  createTask,
-  readTaskById,
-  readAllTask,
-  updateTaskById,
-  deleteTaskById,
-  deleteAllTask,
-} from "../controllers/task";
+  addTodo,
+  completeTodo,
+  deleteTodo,
+  getAllTodos,
+  unCompleteTodo,
+  updateTodo,
+} from "../modules/task/controller/taskController";
 import verifyToken from "../middlewares/verifyToken";
+const todoRoutes = express.Router();
 
-const taskRouter = express.Router();
+todoRoutes.post("/createTask", verifyToken, addTodo);
+todoRoutes.get("/getAll", verifyToken, getAllTodos);
+todoRoutes.patch("/update/:id", verifyToken, updateTodo);
+todoRoutes.patch("/complete/:id", verifyToken, completeTodo);
+todoRoutes.patch("/unComplete/:id", verifyToken, unCompleteTodo);
+todoRoutes.delete("/delete/:id", verifyToken, deleteTodo);
 
-taskRouter.post("/createTask", verifyToken, createTask);
-
-taskRouter.get("/readAll", verifyToken, readAllTask);
-
-taskRouter.get("/readById/:taskId", verifyToken, readTaskById);
-
-taskRouter.put("/update/:taskId", verifyToken, updateTaskById);
-
-taskRouter.delete("/deleteTask", verifyToken, deleteAllTask);
-
-taskRouter.delete("/delete/:taskId", verifyToken, deleteTaskById);
-
-export default taskRouter;
+export default todoRoutes;

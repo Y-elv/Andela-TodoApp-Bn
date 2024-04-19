@@ -1,7 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
 interface User extends Document {
-  
   email: string;
   password: string;
   timestamp: Date;
@@ -9,7 +8,6 @@ interface User extends Document {
 
 const userSchema = new mongoose.Schema(
   {
-  
     email: {
       type: String,
       required: true,

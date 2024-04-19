@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import UserModel, { User } from "../models/userModel";
+import UserModel, { User } from "../database/models/user";
 
 
 

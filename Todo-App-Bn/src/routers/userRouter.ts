@@ -3,7 +3,7 @@ import {
   registerUser,
   loginUser,
  
-} from "../controllers/userRegister";
+} from "../modules/user/controller/userController";
 
 
 
