@@ -3,13 +3,10 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import {createUser, findUserByEmail} from "../repository/userRepository"
 import { encryptPassword, comparePassword } from "../../../utils/password"
+import createToken from "../../../utils/createToken";
 
 dotenv.config();
-const createToken = (_id: string, email: string): string => {
-  const jwtkey = process.env.JWT_SECRET_KEY as string;
-  const token = jwt.sign({ _id, email }, jwtkey);
-  return `Bearer ${token}`;
-};
+
 const registerUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   const user = await findUserByEmail(email);

@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 import userRouter from "./routers/userRouter";
 import taskRouter from "./routers/taskRouter";
+import "./database/config/database"
 dotenv.config();
 const app = express();
 
@@ -13,23 +14,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI, {
-    serverSelectionTimeoutMS: 5000,
-  });
-
-  const db = mongoose.connection;
-
-  db.on("error", (error) => {
-    console.error("MongoDB connection error:", error);
-  });
-
-  db.once("open", () => {
-    console.log("Connected to MongoDB");
-  });
-} else {
-  console.error("MONGODB_URI is not defined in the environment variables.");
-}
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Todo App Apis...");
 });
