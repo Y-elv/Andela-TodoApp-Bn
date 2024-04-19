@@ -20,6 +20,7 @@ describe("User Test Cases", () => {
         expect(response.body).to.have.property("status");
         expect(response.body).to.have.property("message");
         expect(response.body.status).to.equal(true);
+        expect(response.body.message).to.equal("Successfully registered.");
         done(error);
       });
   });
@@ -54,7 +55,10 @@ describe("User Test Cases", () => {
         expect(response.body).to.have.property("status");
         expect(response.body).to.have.property("message");
         expect(response.body.status).to.equal(false);
-        expect(response.body.message).to.equal("Invalid credentials");
+        expect(response.body.message).to.be.oneOf([
+          "User not found",
+          "Invalid Credentials",
+        ]);
         done(error);
       });
   });

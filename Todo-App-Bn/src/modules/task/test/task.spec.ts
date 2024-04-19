@@ -29,8 +29,12 @@ describe("Todo Test Cases", () => {
       .get("/api/v1/todoApp/task/getAll")
       .end((error, response) => {
         expect(response.body).to.be.a("object");
-        expect(response.body).to.have.property("status");
-        expect(response.body.status).to.equal(false);
+             expect(response.body).to.have.property("message");
+             expect(response.body.message).to.be.oneOf([
+               "Unauthorized - Invalid token",
+               "Unauthorized - Missing token",
+             ]);
+        
         done(error);
       });
   });

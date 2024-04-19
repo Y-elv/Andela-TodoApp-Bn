@@ -34,7 +34,7 @@ const loginUser = async (req: Request, res: Response) => {
   if (!passwordMatches) {
     return res
       .status(401)
-      .json({ status: false, message: "Incorrect password" });
+      .json({ status: false, message: "Invalid Credentials" });
   }
 
   const token = createToken(user._id, user.email);
