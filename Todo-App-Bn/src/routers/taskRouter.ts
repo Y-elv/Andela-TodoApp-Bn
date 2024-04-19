@@ -4,6 +4,7 @@ import {
   completeTodo,
   deleteTodo,
   getAllTodos,
+  getTaskById,
   unCompleteTodo,
   updateTodo,
 } from "../modules/task/controller/taskController";
@@ -12,6 +13,7 @@ const todoRoutes = express.Router();
 
 todoRoutes.post("/createTask", verifyToken, addTodo);
 todoRoutes.get("/getAll", verifyToken, getAllTodos);
+todoRoutes.get("/getTask/:id", verifyToken, getTaskById);
 todoRoutes.patch("/update/:id", verifyToken, updateTodo);
 todoRoutes.patch("/complete/:id", verifyToken, completeTodo);
 todoRoutes.patch("/unComplete/:id", verifyToken, unCompleteTodo);

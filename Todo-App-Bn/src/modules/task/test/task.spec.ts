@@ -13,12 +13,13 @@ describe("Todo Test Cases", () => {
       .send({
         title: "TodoTest1",
         description: "This is todo for testing",
+        completed:true
+        
       })
       .end((error, response) => {
         expect(response.body).to.be.a("object");
-        expect(response.body).to.have.property("status");
-        expect(response.body.status).to.equal(false);
         expect(response.body).to.have.property("message");
+        expect(response.body.message).to.be.oneOf(["Unauthorized - Invalid token","Unauthorized - Missing token"]);
         done(error);
       });
   });

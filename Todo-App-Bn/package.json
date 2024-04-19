@@ -30,7 +30,7 @@
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.16",
     "@types/validator": "^13.11.9",
-    "chai": "^5.1.0",
+    "chai": "^4.3.4",
     "chai-http": "^4.4.0",
     "mocha": "^10.4.0",
     "nodemon": "^3.0.3",

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import {createUser, findUserByEmail} from "../repository/userRepository"
-import { encryptPassword, comparePassword } from "../../../utils/password"
+import { createUser, findUserByEmail } from "../repository/userRepository";
+import { encryptPassword, comparePassword } from "../../../utils/password";
 import createToken from "../../../utils/createToken";
 
 dotenv.config();
@@ -24,11 +24,22 @@ const registerUser = async (req: Request, res: Response) => {
 const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await findUserByEmail(email);
-  if (!user) return res.json({ status: false, message: "Invalid credentials" });
+
+  if (!user) {
+    return res.status(401).json({ status: false, message: "User not found" });
+  }
+
   const passwordMatches = await comparePassword(password, user.password);
-  if (!passwordMatches)
-    return res.json({ status: false, message: "Invalid credentials" });
-   const token = createToken(user._id, user.email);
+
+  if (!passwordMatches) {
+    return res
+      .status(401)
+      .json({ status: false, message: "Incorrect password" });
+  }
+
+  const token = createToken(user._id, user.email);
+
   res.json({ status: true, message: { token } });
 };
+
 export { registerUser, loginUser };

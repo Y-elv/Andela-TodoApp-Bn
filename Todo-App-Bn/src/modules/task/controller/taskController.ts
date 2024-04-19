@@ -49,7 +49,7 @@ const updateTodo = async (req: Request, res: Response) => {
 };
 
 const completeTodo = async (req: Request, res: Response) => {
-  const  id  = req.params.id;
+  const id = req.params.id;
   const todo = await findTodoById(id);
   if (!todo) return res.json({ status: false, message: "Todo doesn't exist." });
   const updatedTodo = await updateTodoById(id, { completed: true });
@@ -68,6 +68,20 @@ const unCompleteTodo = async (req: Request, res: Response) => {
   else res.json({ status: false, message: "Failed to update Todo" });
 };
 
+const getTaskById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const todo = await findTodoById(id);
+    if (!todo) {
+      throw new Error("Task not found");
+    }
+    res.json({ status: true, message: todo });
+  } catch (error) {
+    console.error("Error fetching task by ID:", error);
+    return null;
+  }
+};
+
 export {
   addTodo,
   getAllTodos,
@@ -75,4 +89,5 @@ export {
   updateTodo,
   completeTodo,
   unCompleteTodo,
+  getTaskById,
 };
