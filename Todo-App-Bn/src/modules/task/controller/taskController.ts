@@ -15,7 +15,11 @@ const addTodo = async (req: Request, res: Response) => {
     completed,
   };
   const newCreatedTodo = await createTodo(newTodo);
-  res.json({ status: true, message: newCreatedTodo });
+  res.json({
+    status: true,
+    message: newCreatedTodo,
+    todoId: newCreatedTodo._id,
+  });
 };
 
 const getAllTodos = async (req: Request, res: Response) => {

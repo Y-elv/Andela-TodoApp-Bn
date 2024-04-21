@@ -4,21 +4,26 @@ import dotenv from "dotenv";
 import { createUser, findUserByEmail } from "../repository/userRepository";
 import { encryptPassword, comparePassword } from "../../../utils/password";
 import createToken from "../../../utils/createToken";
+import userModel from "../../../database/models/user";
 
 dotenv.config();
 
 const registerUser = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   const user = await findUserByEmail(email);
   if (user) return res.json({ status: false, message: "User already exist." });
   const hashedPassword = await encryptPassword(password);
   const newUser = {
-    name: name,
+  
     email: email,
     password: hashedPassword,
   };
   const newCreatedUser = await createUser(newUser);
-  res.json({ status: true, message: " Successfully registered." });
+  res.json({
+    status: true,
+    message: "Successfully registered.",
+    userId: newCreatedUser._id,
+  });
 };
 
 const loginUser = async (req: Request, res: Response) => {
@@ -42,4 +47,16 @@ const loginUser = async (req: Request, res: Response) => {
   res.json({ status: true, message: { token } });
 };
 
-export { registerUser, loginUser };
+const deleteUser = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  const user = await userModel.findByIdAndDelete({ _id: userId });
+  if (!user) {
+    return res.status(400).json({ status: false, message: "user not found" });
+  } else {
+    return res
+      .status(200)
+      .json({ status: true, message: "user deleted successfully" });
+  }
+};
+
+export { registerUser, loginUser, deleteUser };
