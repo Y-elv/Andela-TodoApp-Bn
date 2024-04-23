@@ -9,10 +9,12 @@ import {
 
 const addTodo = async (req: Request, res: Response) => {
   const { title, description, completed } = req.body;
+  const userId = (req as any).user._id;
   const newTodo = {
     title,
     description,
     completed,
+    userId
   };
   const newCreatedTodo = await createTodo(newTodo);
   res.json({
@@ -23,7 +25,8 @@ const addTodo = async (req: Request, res: Response) => {
 };
 
 const getAllTodos = async (req: Request, res: Response) => {
-  const todos = await getTodos();
+  const userId = (req as any).user._id;
+  const todos = await getTodos(userId);
   res.json({ status: true, message: todos });
 };
 

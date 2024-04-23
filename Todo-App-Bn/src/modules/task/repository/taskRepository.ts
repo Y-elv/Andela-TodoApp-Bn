@@ -4,8 +4,8 @@ const createTodo = async (body: any) => {
   return await Todo.create(body);
 };
 
-const getTodos = async () => {
-  return await Todo.find().sort({ createdAt: -1 });
+const getTodos = async (userId: string) => {
+  return await Todo.find({ userId }).sort({ createdAt: -1 });
 };
 
 const findTodoById = async (id: string) => {

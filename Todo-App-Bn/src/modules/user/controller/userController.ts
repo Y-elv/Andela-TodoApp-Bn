@@ -14,7 +14,6 @@ const registerUser = async (req: Request, res: Response) => {
   if (user) return res.json({ status: false, message: "User already exist." });
   const hashedPassword = await encryptPassword(password);
   const newUser = {
-  
     email: email,
     password: hashedPassword,
   };
@@ -58,5 +57,16 @@ const deleteUser = async (req: Request, res: Response) => {
       .json({ status: true, message: "user deleted successfully" });
   }
 };
+const deleteUserByToken = async (req: Request, res: Response) => {
+  const userId = (req as any).user._id;
+  const user = await userModel.findByIdAndDelete({ _id: userId });
+  if (!user) {
+    return res.status(400).json({ status: false, message: "user not found" });
+  } else {
+    return res
+      .status(200)
+      .json({ status: true, message: "user deleted successfully" });
+  }
+};
 
-export { registerUser, loginUser, deleteUser };
+export { registerUser, loginUser, deleteUser, deleteUserByToken };

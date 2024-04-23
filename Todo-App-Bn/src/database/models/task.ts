@@ -4,6 +4,7 @@ interface Task extends Document {
   title: string;
   description: string;
   completed: boolean;
+  userId: string;
   timestamp: Date;
 }
 
@@ -26,6 +27,12 @@ const taskSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
       default: false,
+    },
+    userId: {
+      type: String,
+      required: true,
+      minlength: 3,
+      maxlength: 1024,
     },
   },
   {

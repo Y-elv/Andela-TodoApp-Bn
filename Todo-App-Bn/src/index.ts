@@ -1,10 +1,9 @@
-import mongoose from "mongoose";
+
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
-import userRouter from "./routers/userRouter";
-import taskRouter from "./routers/taskRouter";
-import "./database/config/database"
+import router from "./routers/index";
+import "./database/config/database";
 dotenv.config();
 const app = express();
 
@@ -17,8 +16,7 @@ app.use(cors());
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Todo App Apis...");
 });
-app.use("/api/v1/todoApp/user", userRouter);
-app.use("/api/v1/todoApp/task", taskRouter);
+app.use("/api", router);
 
 let server: any;
 

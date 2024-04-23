@@ -25,9 +25,9 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
     };
     const user = await UserModel.findById(decoded._id).select("-password");
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+    // if (!user) {
+    //   throw new Error("User not found");
+    // }
 
     console.log("decoded", decoded);
 
